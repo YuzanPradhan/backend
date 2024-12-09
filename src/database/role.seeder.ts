@@ -47,4 +47,4 @@ export class RoleSeeder implements Seeder {
   async drop(): Promise<any> {
     await this.roleRepository.delete({});
   }
-} 
+}

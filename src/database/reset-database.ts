@@ -12,7 +12,7 @@ async function resetDatabase() {
     console.log('Dropping database...');
     await connection.query('DROP SCHEMA public CASCADE');
     await connection.query('CREATE SCHEMA public');
-    
+
     console.log('Database reset complete');
     await connection.close();
   } catch (error) {
@@ -21,4 +21,4 @@ async function resetDatabase() {
   }
 }
 
-resetDatabase(); 
+resetDatabase();

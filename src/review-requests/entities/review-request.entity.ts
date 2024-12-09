@@ -27,7 +27,7 @@ export class ReviewRequest {
   @Column({
     type: 'varchar',
     enum: ['pending', 'in_progress', 'completed', 'cancelled'],
-    default: 'pending'
+    default: 'pending',
   })
   status: string;
 

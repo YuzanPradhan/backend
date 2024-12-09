@@ -22,8 +22,4 @@ seeder({
     }),
     TypeOrmModule.forFeature([Department, Position, Role]),
   ],
-}).run([
-  DepartmentSeeder,
-  PositionSeeder,
-  RoleSeeder,
-]); 
+}).run([DepartmentSeeder, PositionSeeder, RoleSeeder]);

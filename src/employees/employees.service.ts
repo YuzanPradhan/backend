@@ -127,16 +127,27 @@ export class EmployeesService {
         where: { role_id: updateEmployeeDto.role_id },
       });
       if (!role) {
-        throw new ForeignKeyNotFoundException('Role', updateEmployeeDto.role_id);
+        throw new ForeignKeyNotFoundException(
+          'Role',
+          updateEmployeeDto.role_id,
+        );
       }
     }
 
     // Create an object with only the updatable fields
     const updateData = {
-      ...(updateEmployeeDto.first_name && { first_name: updateEmployeeDto.first_name }),
-      ...(updateEmployeeDto.last_name && { last_name: updateEmployeeDto.last_name }),
-      ...(updateEmployeeDto.department_id && { department_id: updateEmployeeDto.department_id }),
-      ...(updateEmployeeDto.position_id && { position_id: updateEmployeeDto.position_id }),
+      ...(updateEmployeeDto.first_name && {
+        first_name: updateEmployeeDto.first_name,
+      }),
+      ...(updateEmployeeDto.last_name && {
+        last_name: updateEmployeeDto.last_name,
+      }),
+      ...(updateEmployeeDto.department_id && {
+        department_id: updateEmployeeDto.department_id,
+      }),
+      ...(updateEmployeeDto.position_id && {
+        position_id: updateEmployeeDto.position_id,
+      }),
       ...(updateEmployeeDto.role_id && { role_id: updateEmployeeDto.role_id }),
     };
 

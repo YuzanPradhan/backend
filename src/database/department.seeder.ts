@@ -31,4 +31,4 @@ export class DepartmentSeeder implements Seeder {
   async drop(): Promise<any> {
     await this.departmentRepository.delete({});
   }
-} 
+}

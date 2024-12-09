@@ -24,7 +24,7 @@ export class ReviewCycle {
   @Column({
     type: 'varchar',
     enum: ['draft', 'active', 'completed'],
-    default: 'draft'
+    default: 'draft',
   })
   status: string;
 

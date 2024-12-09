@@ -23,38 +23,40 @@ export class PositionSeeder implements Seeder {
 
     // Create department map for easy lookup
     const departmentMap = new Map(
-      departments.map(dept => [dept.department_name, dept.department_id])
+      departments.map((dept) => [dept.department_name, dept.department_id]),
     );
 
     const positions = [
-      { 
+      {
         position_name: 'HR Manager',
-        department_id: departmentMap.get('HR')
+        department_id: departmentMap.get('HR'),
       },
-      { 
+      {
         position_name: 'HR Executive',
-        department_id: departmentMap.get('HR')
+        department_id: departmentMap.get('HR'),
       },
-      { 
+      {
         position_name: 'Engineering Lead',
-        department_id: departmentMap.get('Engineering')
+        department_id: departmentMap.get('Engineering'),
       },
-      { 
+      {
         position_name: 'Senior Engineer',
-        department_id: departmentMap.get('Engineering')
+        department_id: departmentMap.get('Engineering'),
       },
-      { 
+      {
         position_name: 'DevOps Engineer',
-        department_id: departmentMap.get('DevOps')
+        department_id: departmentMap.get('DevOps'),
       },
-      { 
+      {
         position_name: 'Senior DevOps Engineer',
-        department_id: departmentMap.get('DevOps')
-      }
+        department_id: departmentMap.get('DevOps'),
+      },
     ];
 
     // Validate all positions have department_id
-    const validPositions = positions.filter(pos => pos.department_id !== undefined);
+    const validPositions = positions.filter(
+      (pos) => pos.department_id !== undefined,
+    );
     if (validPositions.length !== positions.length) {
       throw new Error('All positions must have a valid department_id');
     }
@@ -69,4 +71,4 @@ export class PositionSeeder implements Seeder {
   async drop(): Promise<any> {
     await this.positionRepository.delete({});
   }
-} 
+}
