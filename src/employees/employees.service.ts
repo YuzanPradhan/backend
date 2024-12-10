@@ -7,10 +7,10 @@ import { Position } from '../positions/entities/position.entity';
 import { Role } from '../roles/entities/role.entity';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { ForeignKeyNotFoundException } from '../common/exceptions/foreign-key-not-found.exception';
+import { BaseService } from '../common/base.service';
 
 @Injectable()
-export class EmployeesService {
+export class EmployeesService extends BaseService<Employee> {
   constructor(
     @InjectRepository(Employee)
     private employeeRepository: Repository<Employee>,
@@ -20,68 +20,37 @@ export class EmployeesService {
     private positionRepository: Repository<Position>,
     @InjectRepository(Role)
     private roleRepository: Repository<Role>,
-  ) {}
+  ) {
+    super(employeeRepository, 'Employee');
+  }
 
   async create(createEmployeeDto: CreateEmployeeDto) {
-    // Validate foreign keys
-    const department = await this.departmentRepository.findOne({
-      where: { department_id: createEmployeeDto.department_id },
-    });
-    if (!department) {
-      throw new ForeignKeyNotFoundException(
-        'Department',
-        createEmployeeDto.department_id,
-      );
-    }
-
-    const position = await this.positionRepository.findOne({
-      where: { position_id: createEmployeeDto.position_id },
-    });
-    if (!position) {
-      throw new ForeignKeyNotFoundException(
-        'Position',
-        createEmployeeDto.position_id,
-      );
-    }
-
-    const role = await this.roleRepository.findOne({
-      where: { role_id: createEmployeeDto.role_id },
-    });
-    if (!role) {
-      throw new ForeignKeyNotFoundException('Role', createEmployeeDto.role_id);
-    }
-
-    // Create employee with all required fields
-    const employee = this.employeeRepository.create({
-      first_name: createEmployeeDto.first_name,
-      last_name: createEmployeeDto.last_name,
-      department_id: createEmployeeDto.department_id,
-      position_id: createEmployeeDto.position_id,
-      role_id: createEmployeeDto.role_id,
-    });
-
-    return this.employeeRepository.save(employee);
-  }
-
-  findAll() {
-    return this.employeeRepository.find({
-      relations: [
-        'department',
-        'position',
-        'role',
-        'reviewsGiven',
-        'reviewsReceived',
-        'reviewRequestsToComplete',
-        'reviewRequestsReceived',
-        'managedAssignments',
-        'assignments',
-      ],
+    return this.executeOperation(async () => {
+      const employee = this.repository.create(createEmployeeDto);
+      return await this.saveEntity(employee);
     });
   }
 
-  findOne(id: number) {
-    return this.employeeRepository.findOne({
-      where: { employee_id: id },
+  async findAll() {
+    return this.executeOperation(() =>
+      this.repository.find({
+        relations: [
+          'department',
+          'position',
+          'role',
+          'reviewsGiven',
+          'reviewsReceived',
+          'reviewRequestsToComplete',
+          'reviewRequestsReceived',
+          'managedAssignments',
+          'assignments',
+        ],
+      }),
+    );
+  }
+
+  async findOne(id: number) {
+    return this.findOneOrFail(id, {
       relations: [
         'department',
         'position',
@@ -97,66 +66,22 @@ export class EmployeesService {
   }
 
   async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    // First validate foreign keys
-    if (updateEmployeeDto.department_id) {
-      const department = await this.departmentRepository.findOne({
-        where: { department_id: updateEmployeeDto.department_id },
-      });
-      if (!department) {
-        throw new ForeignKeyNotFoundException(
-          'Department',
-          updateEmployeeDto.department_id,
-        );
-      }
-    }
-
-    if (updateEmployeeDto.position_id) {
-      const position = await this.positionRepository.findOne({
-        where: { position_id: updateEmployeeDto.position_id },
-      });
-      if (!position) {
-        throw new ForeignKeyNotFoundException(
-          'Position',
-          updateEmployeeDto.position_id,
-        );
-      }
-    }
-
-    if (updateEmployeeDto.role_id) {
-      const role = await this.roleRepository.findOne({
-        where: { role_id: updateEmployeeDto.role_id },
-      });
-      if (!role) {
-        throw new ForeignKeyNotFoundException(
-          'Role',
-          updateEmployeeDto.role_id,
-        );
-      }
-    }
-
-    // Create an object with only the updatable fields
-    const updateData = {
-      ...(updateEmployeeDto.first_name && {
-        first_name: updateEmployeeDto.first_name,
-      }),
-      ...(updateEmployeeDto.last_name && {
-        last_name: updateEmployeeDto.last_name,
-      }),
-      ...(updateEmployeeDto.department_id && {
-        department_id: updateEmployeeDto.department_id,
-      }),
-      ...(updateEmployeeDto.position_id && {
-        position_id: updateEmployeeDto.position_id,
-      }),
-      ...(updateEmployeeDto.role_id && { role_id: updateEmployeeDto.role_id }),
-    };
-
-    await this.employeeRepository.update(id, updateData);
-    return this.findOne(id);
+    return this.executeOperation(async () => {
+      await this.findOneOrFail(id);
+      return await this.updateEntity(id, updateEmployeeDto);
+    });
   }
 
   async remove(id: number) {
-    const employee = await this.findOne(id);
-    return this.employeeRepository.remove(employee);
+    return this.removeEntity(id);
+  }
+
+  async findByEmail(email: string) {
+    return this.executeOperation(() =>
+      this.repository.findOne({
+        where: { email },
+        relations: ['role'],
+      }),
+    );
   }
 }

@@ -6,19 +6,25 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ReviewRequestsService } from './review-requests.service';
 import { CreateReviewRequestDto } from './dto/create-review-request.dto';
 import { UpdateReviewRequestDto } from './dto/update-review-request.dto';
 import { ReviewRequest } from './entities/review-request.entity';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
 
 @ApiTags('review-requests')
 @Controller('review-requests')
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class ReviewRequestsController {
   constructor(private readonly reviewRequestsService: ReviewRequestsService) {}
 
   @Post()
+  @Roles('Admin', 'Manager')
   @ApiOperation({ summary: 'Create a new review request' })
   @ApiResponse({
     status: 201,
@@ -30,6 +36,7 @@ export class ReviewRequestsController {
   }
 
   @Get()
+  @Roles('Admin', 'Manager')
   @ApiOperation({ summary: 'Get all review requests' })
   @ApiResponse({
     status: 200,
@@ -41,6 +48,7 @@ export class ReviewRequestsController {
   }
 
   @Get(':id')
+  @Roles('Admin', 'Manager', 'Employee')
   @ApiOperation({ summary: 'Get a review request by id' })
   @ApiResponse({
     status: 200,
@@ -52,6 +60,7 @@ export class ReviewRequestsController {
   }
 
   @Patch(':id')
+  @Roles('Admin', 'Manager')
   @ApiOperation({ summary: 'Update a review request' })
   @ApiResponse({
     status: 200,
@@ -66,6 +75,7 @@ export class ReviewRequestsController {
   }
 
   @Delete(':id')
+  @Roles('Admin')
   @ApiOperation({ summary: 'Delete a review request' })
   @ApiResponse({
     status: 200,

@@ -6,19 +6,24 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { DepartmentsService } from './departments.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
 import { Department } from './entities/department.entity';
+import { AuthGuard } from '@nestjs/passport';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @ApiTags('departments')
 @Controller('departments')
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentsService) {}
-
   @Post()
+  @Roles('Admin')
   @ApiOperation({ summary: 'Create a new department' })
   @ApiResponse({
     status: 201,
@@ -28,8 +33,8 @@ export class DepartmentsController {
   create(@Body() createDepartmentDto: CreateDepartmentDto) {
     return this.departmentsService.create(createDepartmentDto);
   }
-
   @Get()
+  @Roles('Admin', 'Manager', 'Employee')
   @ApiOperation({ summary: 'Get all departments' })
   @ApiResponse({
     status: 200,
@@ -41,6 +46,7 @@ export class DepartmentsController {
   }
 
   @Get(':id')
+  @Roles('Admin', 'Manager', 'Employee')
   @ApiOperation({ summary: 'Get a department by id' })
   @ApiResponse({
     status: 200,
@@ -52,6 +58,7 @@ export class DepartmentsController {
   }
 
   @Patch(':id')
+  @Roles('Admin')
   @ApiOperation({ summary: 'Update a department' })
   @ApiResponse({
     status: 200,
@@ -66,6 +73,7 @@ export class DepartmentsController {
   }
 
   @Delete(':id')
+  @Roles('Admin')
   @ApiOperation({ summary: 'Delete a department' })
   @ApiResponse({
     status: 200,

@@ -10,6 +10,7 @@ import { ReviewCyclesModule } from './review-cycles/review-cycles.module';
 import { AssignmentsModule } from './assignments/assignments.module';
 import { ReviewRequestsModule } from './review-requests/review-requests.module';
 import { ReviewsModule } from './reviews/reviews.module';
+import { AuthModule } from './auth/auth.module';
 import configuration, { databaseConfig } from './config';
 
 @Module({
@@ -35,6 +36,7 @@ import configuration, { databaseConfig } from './config';
     AssignmentsModule,
     ReviewRequestsModule,
     ReviewsModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

@@ -6,19 +6,25 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AssignmentsService } from './assignments.service';
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
 import { UpdateAssignmentDto } from './dto/update-assignment.dto';
 import { Assignment } from './entities/assignment.entity';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
 
 @ApiTags('assignments')
 @Controller('assignments')
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class AssignmentsController {
   constructor(private readonly assignmentsService: AssignmentsService) {}
 
   @Post()
+  @Roles('Admin', 'Manager')
   @ApiOperation({ summary: 'Create a new assignment' })
   @ApiResponse({
     status: 201,
@@ -30,6 +36,7 @@ export class AssignmentsController {
   }
 
   @Get()
+  @Roles('Admin', 'Manager')
   @ApiOperation({ summary: 'Get all assignments' })
   @ApiResponse({
     status: 200,
@@ -41,6 +48,7 @@ export class AssignmentsController {
   }
 
   @Get(':id')
+  @Roles('Admin', 'Manager', 'Employee')
   @ApiOperation({ summary: 'Get an assignment by id' })
   @ApiResponse({
     status: 200,
@@ -52,6 +60,7 @@ export class AssignmentsController {
   }
 
   @Patch(':id')
+  @Roles('Admin', 'Manager')
   @ApiOperation({ summary: 'Update an assignment' })
   @ApiResponse({
     status: 200,
@@ -66,6 +75,7 @@ export class AssignmentsController {
   }
 
   @Delete(':id')
+  @Roles('Admin')
   @ApiOperation({ summary: 'Delete an assignment' })
   @ApiResponse({
     status: 200,

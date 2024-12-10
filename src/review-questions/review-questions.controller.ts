@@ -6,21 +6,27 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ReviewQuestionsService } from './review-questions.service';
 import { CreateReviewQuestionDto } from './dto/create-review-question.dto';
 import { UpdateReviewQuestionDto } from './dto/update-review-question.dto';
 import { ReviewQuestion } from './entities/review-question.entity';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
 
 @ApiTags('review-questions')
 @Controller('review-questions')
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class ReviewQuestionsController {
   constructor(
     private readonly reviewQuestionsService: ReviewQuestionsService,
   ) {}
 
   @Post()
+  @Roles('Admin')
   @ApiOperation({ summary: 'Create a new review question' })
   @ApiResponse({
     status: 201,
@@ -32,6 +38,7 @@ export class ReviewQuestionsController {
   }
 
   @Get()
+  @Roles('Admin', 'Manager', 'Employee')
   @ApiOperation({ summary: 'Get all review questions' })
   @ApiResponse({
     status: 200,
@@ -43,6 +50,7 @@ export class ReviewQuestionsController {
   }
 
   @Get(':id')
+  @Roles('Admin', 'Manager', 'Employee')
   @ApiOperation({ summary: 'Get a review question by id' })
   @ApiResponse({
     status: 200,
@@ -54,6 +62,7 @@ export class ReviewQuestionsController {
   }
 
   @Patch(':id')
+  @Roles('Admin')
   @ApiOperation({ summary: 'Update a review question' })
   @ApiResponse({
     status: 200,
@@ -68,6 +77,7 @@ export class ReviewQuestionsController {
   }
 
   @Delete(':id')
+  @Roles('Admin')
   @ApiOperation({ summary: 'Delete a review question' })
   @ApiResponse({
     status: 200,

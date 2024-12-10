@@ -6,14 +6,4 @@ export class CreateRoleDto {
     description: 'The name of the role',
   })
   role_name: string;
-
-  @ApiProperty({
-    example: {
-      canCreateReviews: true,
-      canEditReviews: true,
-      canDeleteReviews: false,
-    },
-    description: 'The permissions associated with this role',
-  })
-  permissions: object;
 }

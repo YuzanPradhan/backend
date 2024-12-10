@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
   JoinColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 import { Department } from '../../departments/entities/department.entity';
 import { Position } from '../../positions/entities/position.entity';
 import { Role } from '../../roles/entities/role.entity';
@@ -25,6 +26,13 @@ export class Employee {
 
   @Column()
   last_name: string;
+
+  @Column({ unique: true })
+  email: string;
+
+  @Column({ length: 255 })
+  @Exclude()
+  password: string;
 
   @Column({ name: 'department_id' })
   department_id: number;
@@ -82,4 +90,8 @@ export class Employee {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  async validatePassword(password: string): Promise<boolean> {
+    return this.password === password;
+  }
 }

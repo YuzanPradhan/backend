@@ -17,8 +17,8 @@ seeder({
     }),
     TypeOrmModule.forRoot({
       ...configuration().database,
-      synchronize: true, // Only for development
-      dropSchema: true, // This will drop all tables before seeding
+      synchronize: false, // Don't auto-sync during seeding
+      dropSchema: false, // Don't drop schema during seeding
     }),
     TypeOrmModule.forFeature([Department, Position, Role]),
   ],

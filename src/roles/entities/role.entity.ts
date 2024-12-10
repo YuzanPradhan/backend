@@ -16,9 +16,6 @@ export class Role {
   @Column({ unique: true })
   role_name: string;
 
-  @Column('jsonb')
-  permissions: object;
-
   @OneToMany(() => Employee, (employee) => employee.role)
   employees: Employee[];
 

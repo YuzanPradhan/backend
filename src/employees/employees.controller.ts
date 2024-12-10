@@ -6,30 +6,41 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { Employee } from './entities/employee.entity';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
 
 @ApiTags('employees')
 @Controller('employees')
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
 
   @Post()
+  @Roles('Admin')
   @ApiOperation({ summary: 'Create a new employee' })
   @ApiResponse({
     status: 201,
     description: 'The employee has been successfully created.',
     type: Employee,
   })
+  @ApiResponse({
+    status: 409,
+    description: 'Email already exists',
+  })
   create(@Body() createEmployeeDto: CreateEmployeeDto) {
     return this.employeesService.create(createEmployeeDto);
   }
 
   @Get()
+  @Roles('Admin', 'Manager')
   @ApiOperation({ summary: 'Get all employees' })
   @ApiResponse({
     status: 200,
@@ -41,6 +52,7 @@ export class EmployeesController {
   }
 
   @Get(':id')
+  @Roles('Admin', 'Manager', 'Employee')
   @ApiOperation({ summary: 'Get an employee by id' })
   @ApiResponse({
     status: 200,
@@ -52,6 +64,7 @@ export class EmployeesController {
   }
 
   @Patch(':id')
+  @Roles('Admin')
   @ApiOperation({ summary: 'Update an employee' })
   @ApiResponse({
     status: 200,
@@ -66,6 +79,7 @@ export class EmployeesController {
   }
 
   @Delete(':id')
+  @Roles('Admin')
   @ApiOperation({ summary: 'Delete an employee' })
   @ApiResponse({
     status: 200,

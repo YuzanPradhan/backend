@@ -6,19 +6,25 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { Review } from './entities/review.entity';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
 
 @ApiTags('reviews')
 @Controller('reviews')
+@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
   @Post()
+  @Roles('Admin', 'Manager', 'Employee')
   @ApiOperation({ summary: 'Create a new review' })
   @ApiResponse({
     status: 201,
@@ -30,6 +36,7 @@ export class ReviewsController {
   }
 
   @Get()
+  @Roles('Admin', 'Manager')
   @ApiOperation({ summary: 'Get all reviews' })
   @ApiResponse({
     status: 200,
@@ -41,6 +48,7 @@ export class ReviewsController {
   }
 
   @Get(':id')
+  @Roles('Admin', 'Manager', 'Employee')
   @ApiOperation({ summary: 'Get a review by id' })
   @ApiResponse({
     status: 200,
@@ -56,6 +64,7 @@ export class ReviewsController {
   }
 
   @Patch(':id')
+  @Roles('Admin', 'Manager', 'Employee')
   @ApiOperation({ summary: 'Update a review' })
   @ApiResponse({
     status: 200,
@@ -67,6 +76,7 @@ export class ReviewsController {
   }
 
   @Delete(':id')
+  @Roles('Admin')
   @ApiOperation({ summary: 'Delete a review' })
   @ApiResponse({
     status: 200,

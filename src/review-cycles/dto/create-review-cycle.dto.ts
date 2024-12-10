@@ -1,22 +1,40 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, Matches, IsEnum } from 'class-validator';
+
+enum ReviewCycleStatus {
+  DRAFT = 'draft',
+  ACTIVE = 'active',
+  COMPLETED = 'completed',
+}
 
 export class CreateReviewCycleDto {
   @ApiProperty({
-    example: '2024-01-01T00:00:00.000Z',
-    description: 'The start date of the review cycle',
+    example: '01-01-2024',
+    description: 'The start date of the review cycle (MM-DD-YYYY)',
   })
-  start_date: Date;
+  @IsString()
+  @Matches(/^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])-\d{4}$/, {
+    message: 'start_date must be in MM-DD-YYYY format',
+  })
+  start_date: string;
 
   @ApiProperty({
-    example: '2024-03-31T23:59:59.999Z',
-    description: 'The end date of the review cycle',
+    example: '03-01-2024',
+    description: 'The end date of the review cycle (MM-DD-YYYY)',
   })
-  end_date: Date;
+  @IsString()
+  @Matches(/^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])-\d{4}$/, {
+    message: 'end_date must be in MM-DD-YYYY format',
+  })
+  end_date: string;
 
   @ApiProperty({
     example: 'active',
     description: 'The status of the review cycle',
-    enum: ['draft', 'active', 'completed'],
+    enum: ReviewCycleStatus,
   })
-  status: string;
+  @IsEnum(ReviewCycleStatus, {
+    message: 'status must be either draft, active, or completed',
+  })
+  status: ReviewCycleStatus;
 }

@@ -15,24 +15,12 @@ export class RoleSeeder implements Seeder {
     const roles = [
       {
         role_name: 'Admin',
-        permissions: {
-          users: ['create', 'read', 'update', 'delete'],
-          reviews: ['create', 'read', 'update', 'delete'],
-        },
       },
       {
         role_name: 'Manager',
-        permissions: {
-          users: ['read'],
-          reviews: ['create', 'read', 'update'],
-        },
       },
       {
         role_name: 'Employee',
-        permissions: {
-          users: ['read'],
-          reviews: ['read'],
-        },
       },
     ];
 
