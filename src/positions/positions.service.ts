@@ -6,31 +6,42 @@ import { Department } from '../departments/entities/department.entity';
 import { CreatePositionDto } from './dto/create-position.dto';
 import { UpdatePositionDto } from './dto/update-position.dto';
 import { ForeignKeyNotFoundException } from '../common/exceptions/foreign-key-not-found.exception';
+import { BaseService } from '../common/base.service';
+import { DuplicateEntryException } from '../common/exceptions/duplicate-entry.exception';
 
 @Injectable()
-export class PositionsService {
+export class PositionsService extends BaseService<Position> {
   constructor(
     @InjectRepository(Position)
     private positionRepository: Repository<Position>,
     @InjectRepository(Department)
     private departmentRepository: Repository<Department>,
-  ) {}
+  ) {
+    super(positionRepository, 'Position');
+  }
 
   async create(createPositionDto: CreatePositionDto) {
+    // Check for duplicate position name in the same department
+    const exists = await this.positionRepository.findOne({
+      where: {
+        position_name: createPositionDto.position_name,
+        department_id: createPositionDto.department_id,
+      },
+    });
+    if (exists) {
+      throw new DuplicateEntryException('position_name in department');
+    }
+
     // Check if department exists
     const department = await this.departmentRepository.findOne({
       where: { department_id: createPositionDto.department_id },
     });
-
     if (!department) {
-      throw new ForeignKeyNotFoundException(
-        'Department',
-        createPositionDto.department_id,
-      );
+      throw new ForeignKeyNotFoundException('Department', createPositionDto.department_id);
     }
 
     const position = this.positionRepository.create(createPositionDto);
-    return this.positionRepository.save(position);
+    return this.saveEntity(position);
   }
 
   findAll() {

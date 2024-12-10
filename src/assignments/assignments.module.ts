@@ -10,12 +10,12 @@ import { AssignmentsController } from './assignments.controller';
   imports: [
     TypeOrmModule.forFeature([
       Assignment,
-      Employee, // For FK validation
-      ReviewCycle, // For FK validation
+      Employee,
+      ReviewCycle,
     ]),
   ],
   controllers: [AssignmentsController],
   providers: [AssignmentsService],
-  exports: [AssignmentsService], // Export if other modules need it
+  exports: [AssignmentsService],
 })
 export class AssignmentsModule {}

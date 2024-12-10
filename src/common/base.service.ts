@@ -68,6 +68,15 @@ export abstract class BaseService<T> {
     }
   }
 
+  protected async checkDuplicate(field: string, value: any): Promise<void> {
+    const exists = await this.repository.findOne({
+      where: { [field]: value } as any,
+    });
+    if (exists) {
+      throw new DuplicateEntryException(field);
+    }
+  }
+
   private handleError(error: any): never {
     // Handle unique constraint violations
     if (error.code === '23505') {

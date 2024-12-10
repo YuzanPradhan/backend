@@ -4,17 +4,21 @@ import { Repository } from 'typeorm';
 import { Role } from './entities/role.entity';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
+import { BaseService } from '../common/base.service';
 
 @Injectable()
-export class RolesService {
+export class RolesService extends BaseService<Role> {
   constructor(
     @InjectRepository(Role)
     private roleRepository: Repository<Role>,
-  ) {}
+  ) {
+    super(roleRepository, 'Role');
+  }
 
-  create(createRoleDto: CreateRoleDto) {
-    const role = this.roleRepository.create(createRoleDto);
-    return this.roleRepository.save(role);
+  async create(createRoleDto: CreateRoleDto) {
+    await this.checkDuplicate('role_name', createRoleDto.role_name);
+    const role = this.repository.create(createRoleDto);
+    return this.saveEntity(role);
   }
 
   findAll() {

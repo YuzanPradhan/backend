@@ -33,6 +33,7 @@ export class AuthService {
       email: employee.email,
       sub: employee.employee_id,
       role: employee.role.role_name,
+      id: employee.employee_id,
     };
 
     return {

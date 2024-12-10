@@ -4,17 +4,21 @@ import { Repository } from 'typeorm';
 import { Department } from './entities/department.entity';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
+import { BaseService } from '../common/base.service';
 
 @Injectable()
-export class DepartmentsService {
+export class DepartmentsService extends BaseService<Department> {
   constructor(
     @InjectRepository(Department)
     private departmentRepository: Repository<Department>,
-  ) {}
+  ) {
+    super(departmentRepository, 'Department');
+  }
 
-  create(createDepartmentDto: CreateDepartmentDto) {
+  async create(createDepartmentDto: CreateDepartmentDto) {
+    await this.checkDuplicate('department_name', createDepartmentDto.department_name);
     const department = this.departmentRepository.create(createDepartmentDto);
-    return this.departmentRepository.save(department);
+    return this.saveEntity(department);
   }
 
   findAll() {

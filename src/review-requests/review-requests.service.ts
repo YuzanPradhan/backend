@@ -41,4 +41,41 @@ export class ReviewRequestsService {
     const reviewRequest = await this.findOne(id);
     return this.reviewRequestRepository.remove(reviewRequest);
   }
+
+  async findMyReviewRequests(employeeId: number) {
+    return this.reviewRequestRepository.find({
+      where: {
+        reviewer_id: employeeId,
+      },
+      relations: [
+        'reviewer',
+        'reviewee',
+        'reviewCycle',
+        'reviewee.department',
+        'reviewee.position',
+      ],
+      order: {
+        created_at: 'DESC',
+      },
+    });
+  }
+
+  async findMyPendingReviews(employeeId: number) {
+    return this.reviewRequestRepository.find({
+      where: {
+        reviewer_id: employeeId,
+        status: 'pending',
+      },
+      relations: [
+        'reviewer',
+        'reviewee',
+        'reviewCycle',
+        'reviewee.department',
+        'reviewee.position',
+      ],
+      order: {
+        created_at: 'DESC',
+      },
+    });
+  }
 }

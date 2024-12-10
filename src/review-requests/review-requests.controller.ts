@@ -16,6 +16,7 @@ import { ReviewRequest } from './entities/review-request.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
+import { GetUser } from '../auth/decorators/get-user.decorator';
 
 @ApiTags('review-requests')
 @Controller('review-requests')
@@ -23,8 +24,37 @@ import { Roles } from '../auth/decorators/roles.decorator';
 export class ReviewRequestsController {
   constructor(private readonly reviewRequestsService: ReviewRequestsService) {}
 
+  @Get('my-reviews')
+  @Roles('Admin', 'Manager', 'Employee')
+  @ApiOperation({
+    summary: 'Get all review requests assigned to current user',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Return all review requests where current user is reviewer.',
+    type: [ReviewRequest],
+  })
+  findMyReviewRequests(@GetUser() user: any) {
+    return this.reviewRequestsService.findMyReviewRequests(user.employee_id);
+  }
+
+  @Get('my-pending-reviews')
+  @Roles('Admin', 'Manager', 'Employee')
+  @ApiOperation({
+    summary: 'Get pending review requests assigned to current user',
+  })
+  @ApiResponse({
+    status: 200,
+    description:
+      'Return pending review requests where current user is reviewer.',
+    type: [ReviewRequest],
+  })
+  findMyPendingReviews(@GetUser() user: any) {
+    return this.reviewRequestsService.findMyPendingReviews(user.employee_id);
+  }
+
   @Post()
-  @Roles('Admin', 'Manager')
+  @Roles('Employee')
   @ApiOperation({ summary: 'Create a new review request' })
   @ApiResponse({
     status: 201,

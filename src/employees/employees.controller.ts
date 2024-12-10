@@ -16,6 +16,7 @@ import { Employee } from './entities/employee.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
+import { GetUser } from '../auth/decorators/get-user.decorator';
 
 @ApiTags('employees')
 @Controller('employees')
@@ -87,5 +88,17 @@ export class EmployeesController {
   })
   remove(@Param('id') id: number) {
     return this.employeesService.remove(+id);
+  }
+
+  @Get('profile/me')
+  @Roles('Admin', 'Manager', 'Employee')
+  @ApiOperation({ summary: 'Get current user profile' })
+  @ApiResponse({
+    status: 200,
+    description: 'Return the current user profile.',
+    type: Employee,
+  })
+  getProfile(@GetUser() user: any) {
+    return this.employeesService.findOne(user.employee_id);
   }
 }
