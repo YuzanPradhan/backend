@@ -75,6 +75,29 @@ export class EmployeesService extends BaseService<Employee> {
           'managedAssignments',
           'assignments',
         ],
+        select: {
+          employee_id: true,
+          first_name: true,
+          last_name: true,
+          email: true,
+          department_id: true,
+          position_id: true,
+          role_id: true,
+          created_at: true,
+          updated_at: true,
+          department: {
+            department_id: true,
+            department_name: true,
+          },
+          position: {
+            position_id: true,
+            position_name: true,
+          },
+          role: {
+            role_id: true,
+            role_name: true,
+          },
+        },
       }),
     );
   }
