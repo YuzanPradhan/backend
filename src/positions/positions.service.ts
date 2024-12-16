@@ -37,7 +37,10 @@ export class PositionsService extends BaseService<Position> {
       where: { department_id: createPositionDto.department_id },
     });
     if (!department) {
-      throw new ForeignKeyNotFoundException('Department', createPositionDto.department_id);
+      throw new ForeignKeyNotFoundException(
+        'Department',
+        createPositionDto.department_id,
+      );
     }
 
     const position = this.positionRepository.create(createPositionDto);

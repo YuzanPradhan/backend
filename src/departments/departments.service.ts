@@ -16,7 +16,10 @@ export class DepartmentsService extends BaseService<Department> {
   }
 
   async create(createDepartmentDto: CreateDepartmentDto) {
-    await this.checkDuplicate('department_name', createDepartmentDto.department_name);
+    await this.checkDuplicate(
+      'department_name',
+      createDepartmentDto.department_name,
+    );
     const department = this.departmentRepository.create(createDepartmentDto);
     return this.saveEntity(department);
   }

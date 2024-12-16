@@ -16,7 +16,7 @@ export class ReviewsService {
     try {
       const review = this.reviewRepository.create(createReviewDto);
       return await this.reviewRepository.save(review);
-    } catch (error) {
+    } catch {
       throw new InternalServerErrorException('Database connection error');
     }
   }
@@ -26,7 +26,7 @@ export class ReviewsService {
       return await this.reviewRepository.find({
         relations: ['reviewer', 'reviewee', 'reviewCycle'],
       });
-    } catch (error) {
+    } catch {
       throw new InternalServerErrorException('Database connection error');
     }
   }
@@ -37,7 +37,7 @@ export class ReviewsService {
         where: { review_id: id },
         relations: ['reviewer', 'reviewee', 'reviewCycle'],
       });
-    } catch (error) {
+    } catch {
       throw new InternalServerErrorException('Database connection error');
     }
   }
@@ -46,7 +46,7 @@ export class ReviewsService {
     try {
       await this.reviewRepository.update(id, updateReviewDto);
       return this.findOne(id);
-    } catch (error) {
+    } catch {
       throw new InternalServerErrorException('Database connection error');
     }
   }
@@ -55,7 +55,7 @@ export class ReviewsService {
     try {
       const review = await this.findOne(id);
       return await this.reviewRepository.remove(review);
-    } catch (error) {
+    } catch {
       throw new InternalServerErrorException('Database connection error');
     }
   }

@@ -23,6 +23,23 @@ export class Review {
   @Column({ name: 'cycle_id' })
   cycle_id: number;
 
+  @Column({
+    name: 'rating',
+    type: 'int',
+    nullable: false,
+    default: 1,
+    transformer: {
+      to: (value) => value,
+      from: (value) => {
+        if (value < 1 || value > 5) {
+          throw new Error('Rating must be between 1 and 5');
+        }
+        return value;
+      },
+    },
+  })
+  rating: number;
+
   @Column('jsonb')
   questions_and_answers: object;
 

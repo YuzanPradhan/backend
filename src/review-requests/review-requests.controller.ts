@@ -90,7 +90,7 @@ export class ReviewRequestsController {
   }
 
   @Patch(':id')
-  @Roles('Admin', 'Manager')
+  @Roles('Admin', 'Manager', 'Employee')
   @ApiOperation({ summary: 'Update a review request' })
   @ApiResponse({
     status: 200,

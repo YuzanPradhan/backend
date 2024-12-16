@@ -7,13 +7,7 @@ import { AssignmentsService } from './assignments.service';
 import { AssignmentsController } from './assignments.controller';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([
-      Assignment,
-      Employee,
-      ReviewCycle,
-    ]),
-  ],
+  imports: [TypeOrmModule.forFeature([Assignment, Employee, ReviewCycle])],
   controllers: [AssignmentsController],
   providers: [AssignmentsService],
   exports: [AssignmentsService],
