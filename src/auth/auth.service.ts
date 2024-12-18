@@ -29,12 +29,17 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
+    console.log('Employee found:', employee);
+    console.log('Employee role:', employee.role);
+
     const payload = {
       email: employee.email,
       sub: employee.employee_id,
       role: employee.role.role_name,
       id: employee.employee_id,
     };
+
+    console.log('JWT payload:', payload);
 
     return {
       access_token: this.jwtService.sign(payload),

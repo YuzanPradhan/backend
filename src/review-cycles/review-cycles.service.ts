@@ -18,15 +18,12 @@ export class ReviewCyclesService {
   }
 
   findAll() {
-    return this.reviewCycleRepository.find({
-      relations: ['assignments', 'reviewRequests', 'reviews'],
-    });
+    return this.reviewCycleRepository.find();
   }
 
   findOne(id: number) {
     return this.reviewCycleRepository.findOne({
       where: { cycle_id: id },
-      relations: ['assignments', 'reviewRequests', 'reviews'],
     });
   }
 

@@ -18,7 +18,8 @@ export abstract class BaseService<T> {
     try {
       return await operation();
     } catch (error) {
-      this.handleError(error);
+      console.error('Error in executeOperation:', error);
+      throw new InternalServerErrorException(error.message || 'An unexpected error occurred');
     }
   }
 
@@ -28,7 +29,7 @@ export abstract class BaseService<T> {
   ): Promise<T> {
     try {
       const entity = await this.repository.findOne({
-        where: { id } as any,
+        where: { [`${this.entityName.toLowerCase()}_id`]: id } as any,
         ...options,
       });
       if (!entity) {
@@ -52,8 +53,9 @@ export abstract class BaseService<T> {
 
   protected async updateEntity(id: number, updateData: Partial<T>): Promise<T> {
     try {
-      await this.repository.update(id, updateData as any);
-      return await this.findOneOrFail(id);
+      const entity = await this.findOneOrFail(id);
+      Object.assign(entity, updateData);
+      return await this.repository.save(entity as any);
     } catch (error) {
       this.handleError(error);
     }
@@ -78,6 +80,7 @@ export abstract class BaseService<T> {
   }
 
   private handleError(error: any): never {
+    console.error('Handling error:', error);
     // Handle unique constraint violations
     if (error.code === '23505') {
       const field = this.extractFieldFromError(error);
@@ -99,7 +102,7 @@ export abstract class BaseService<T> {
 
     // Default error
     throw new InternalServerErrorException(
-      `Error processing ${this.entityName.toLowerCase()} operation`,
+      `Error processing ${this.entityName.toLowerCase()} operation: ${error.message}`,
     );
   }
 

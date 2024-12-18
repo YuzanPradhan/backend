@@ -48,7 +48,8 @@ export class EmployeesController {
     description: 'Return all employees.',
     type: [Employee],
   })
-  findAll() {
+  findAll(@GetUser() user: any) {
+    console.log('User role:', user.role);
     return this.employeesService.findAll();
   }
 

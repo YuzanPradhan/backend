@@ -62,44 +62,72 @@ export class EmployeesService extends BaseService<Employee> {
   }
 
   async findAll() {
-    return this.executeOperation(() =>
-      this.repository.find({
-        relations: [
-          'department',
-          'position',
-          'role',
-          'reviewsGiven',
-          'reviewsReceived',
-          'reviewRequestsToComplete',
-          'reviewRequestsReceived',
-          'managedAssignments',
-          'assignments',
-        ],
-        select: {
-          employee_id: true,
-          first_name: true,
-          last_name: true,
-          email: true,
-          department_id: true,
-          position_id: true,
-          role_id: true,
-          created_at: true,
-          updated_at: true,
-          department: {
-            department_id: true,
-            department_name: true,
-          },
-          position: {
-            position_id: true,
-            position_name: true,
-          },
-          role: {
-            role_id: true,
-            role_name: true,
-          },
-        },
-      }),
-    );
+    console.log('Finding all employees');
+    return this.executeOperation(async () => {
+      try {
+        // First get employees with basic relations
+        const queryBuilder = this.repository
+          .createQueryBuilder('employee')
+          .leftJoinAndSelect('employee.department', 'department')
+          .leftJoinAndSelect('employee.position', 'position')
+          .leftJoinAndSelect('employee.role', 'role');
+
+        const employees = await queryBuilder.getMany();
+
+        // Then load reviews and other relations separately to handle potential invalid ratings
+        for (const employee of employees) {
+          try {
+            await this.repository
+              .createQueryBuilder()
+              .relation(Employee, 'reviewsGiven')
+              .of(employee)
+              .loadMany();
+
+            await this.repository
+              .createQueryBuilder()
+              .relation(Employee, 'reviewsReceived')
+              .of(employee)
+              .loadMany();
+
+            await this.repository
+              .createQueryBuilder()
+              .relation(Employee, 'reviewRequestsToComplete')
+              .of(employee)
+              .loadMany();
+
+            await this.repository
+              .createQueryBuilder()
+              .relation(Employee, 'reviewRequestsReceived')
+              .of(employee)
+              .loadMany();
+
+            await this.repository
+              .createQueryBuilder()
+              .relation(Employee, 'managedAssignments')
+              .of(employee)
+              .loadMany();
+
+            await this.repository
+              .createQueryBuilder()
+              .relation(Employee, 'assignments')
+              .of(employee)
+              .loadMany();
+          } catch (error) {
+            console.warn(
+              `Failed to load some relations for employee ${employee.employee_id}:`,
+              error.message,
+            );
+            // Continue loading other employees even if one fails
+          }
+        }
+
+        console.log('Found employees:', JSON.stringify(employees, null, 2));
+        return employees;
+      } catch (error) {
+        console.error('Error in findAll:', error);
+        throw error;
+      }
+    });
   }
 
   async findOne(id: number): Promise<Employee> {
@@ -127,12 +155,26 @@ export class EmployeesService extends BaseService<Employee> {
   }
 
   async findByEmail(email: string) {
-    return this.executeOperation(() =>
+    console.log('Finding employee by email:', email);
+    const employee = await this.executeOperation(() =>
       this.repository.findOne({
         where: { email },
         relations: ['role'],
+        select: {
+          employee_id: true,
+          first_name: true,
+          last_name: true,
+          email: true,
+          password: true,
+          role: {
+            role_id: true,
+            role_name: true,
+          },
+        },
       }),
     );
+    console.log('Found employee:', employee);
+    return employee;
   }
 
   async getProfile(employeeId: number) {
