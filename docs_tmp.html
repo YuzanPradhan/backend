@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>docs.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="performance-review-system-api-documentation">Performance Review System API Documentation</h1>
+<h2 id="overview">Overview</h2>
+<p>The Performance Review System is a comprehensive platform for managing employee performance reviews. This document provides detailed information about all API endpoints, data models, and their relationships.</p>
+<h2 id="entity-relationships">Entity Relationships</h2>
+<h3 id="employee">Employee</h3>
+<ul>
+<li>Has one Department (Many-to-One)</li>
+<li>Has one Position (Many-to-One)</li>
+<li>Has one Role (Many-to-One)</li>
+<li>Has many Reviews as reviewer (One-to-Many)</li>
+<li>Has many Reviews as reviewee (One-to-Many)</li>
+<li>Has many Review Requests as reviewer (One-to-Many)</li>
+<li>Has many Review Requests as reviewee (One-to-Many)</li>
+<li>Has many Assignments as manager (One-to-Many)</li>
+<li>Has many Assignments as employee (One-to-Many)</li>
+</ul>
+<h3 id="review-cycle">Review Cycle</h3>
+<ul>
+<li>Has many Assignments (One-to-Many)</li>
+<li>Has many Review Requests (One-to-Many)</li>
+<li>Has many Reviews (One-to-Many)</li>
+</ul>
+<h2 id="base-url">Base URL</h2>
+<pre class="hljs"><code><div>http://localhost:3000
+</div></code></pre>
+<h2 id="authentication-and-authorization">Authentication and Authorization</h2>
+<h3 id="login">Login</h3>
+<pre class="hljs"><code><div><span class="hljs-attribute">POST /auth/login
+</span></div></code></pre>
+<p>Authenticates a user and returns a JWT token.</p>
+<p><strong>Request Body:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"password"</span>: <span class="hljs-string">"string"</span>
+}
+</div></code></pre>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"access_token"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"user"</span>: {
+    <span class="hljs-attr">"id"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"email"</span>: <span class="hljs-string">"string"</span>,
+    <span class="hljs-attr">"role"</span>: {
+      <span class="hljs-attr">"role_name"</span>: <span class="hljs-string">"string"</span>
+    },
+    <span class="hljs-attr">"first_name"</span>: <span class="hljs-string">"string"</span>,
+    <span class="hljs-attr">"last_name"</span>: <span class="hljs-string">"string"</span>,
+    <span class="hljs-attr">"department"</span>: {
+      <span class="hljs-attr">"department_id"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"department_name"</span>: <span class="hljs-string">"string"</span>
+    },
+    <span class="hljs-attr">"position"</span>: {
+      <span class="hljs-attr">"position_id"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"position_name"</span>: <span class="hljs-string">"string"</span>
+    }
+  }
+}
+</div></code></pre>
+<p><strong>Error Responses:</strong></p>
+<ul>
+<li><code>401 Unauthorized</code>: Invalid credentials</li>
+<li><code>400 Bad Request</code>: Missing email or password</li>
+</ul>
+<h2 id="employees">Employees</h2>
+<h3 id="get-all-employees">Get All Employees</h3>
+<pre class="hljs"><code><div><span class="hljs-attribute">GET /employees
+</span></div></code></pre>
+<p>Returns a list of all employees.</p>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>department_id</code> (optional): Filter by department</li>
+<li><code>position_id</code> (optional): Filter by position</li>
+<li><code>role_id</code> (optional): Filter by role</li>
+<li><code>page</code> (optional): Page number for pagination (default: 1)</li>
+<li><code>limit</code> (optional): Number of items per page (default: 10)</li>
+</ul>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"data"</span>: [
+    {
+      <span class="hljs-attr">"employee_id"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"first_name"</span>: <span class="hljs-string">"string"</span>,
+      <span class="hljs-attr">"last_name"</span>: <span class="hljs-string">"string"</span>,
+      <span class="hljs-attr">"email"</span>: <span class="hljs-string">"string"</span>,
+      <span class="hljs-attr">"department"</span>: {
+        <span class="hljs-attr">"department_id"</span>: <span class="hljs-string">"number"</span>,
+        <span class="hljs-attr">"department_name"</span>: <span class="hljs-string">"string"</span>,
+        <span class="hljs-attr">"description"</span>: <span class="hljs-string">"string"</span>
+      },
+      <span class="hljs-attr">"position"</span>: {
+        <span class="hljs-attr">"position_id"</span>: <span class="hljs-string">"number"</span>,
+        <span class="hljs-attr">"position_name"</span>: <span class="hljs-string">"string"</span>,
+        <span class="hljs-attr">"description"</span>: <span class="hljs-string">"string"</span>
+      },
+      <span class="hljs-attr">"role"</span>: {
+        <span class="hljs-attr">"role_id"</span>: <span class="hljs-string">"number"</span>,
+        <span class="hljs-attr">"role_name"</span>: <span class="hljs-string">"string"</span>,
+        <span class="hljs-attr">"description"</span>: <span class="hljs-string">"string"</span>
+      },
+      <span class="hljs-attr">"created_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+      <span class="hljs-attr">"updated_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>
+    }
+  ],
+  <span class="hljs-attr">"meta"</span>: {
+    <span class="hljs-attr">"total"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"page"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"last_page"</span>: <span class="hljs-string">"number"</span>
+  }
+}
+</div></code></pre>
+<h3 id="create-employee">Create Employee</h3>
+<pre class="hljs"><code><div><span class="hljs-attribute">POST /employees
+</span></div></code></pre>
+<p>Creates a new employee. Requires admin role.</p>
+<p><strong>Request Body:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"first_name"</span>: <span class="hljs-string">"string (required)"</span>,
+  <span class="hljs-attr">"last_name"</span>: <span class="hljs-string">"string (required)"</span>,
+  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"string (required, unique)"</span>,
+  <span class="hljs-attr">"password"</span>: <span class="hljs-string">"string (required, min: 8 chars)"</span>,
+  <span class="hljs-attr">"department_id"</span>: <span class="hljs-string">"number (required)"</span>,
+  <span class="hljs-attr">"position_id"</span>: <span class="hljs-string">"number (required)"</span>,
+  <span class="hljs-attr">"role_id"</span>: <span class="hljs-string">"number (required)"</span>
+}
+</div></code></pre>
+<p><strong>Validation Rules:</strong></p>
+<ul>
+<li><code>email</code>: Must be unique and valid email format</li>
+<li><code>password</code>: Minimum 8 characters</li>
+<li><code>department_id</code>: Must exist in departments table</li>
+<li><code>position_id</code>: Must exist in positions table</li>
+<li><code>role_id</code>: Must exist in roles table</li>
+</ul>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"employee_id"</span>: <span class="hljs-string">"number"</span>,
+  <span class="hljs-attr">"first_name"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"last_name"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"department"</span>: {
+    <span class="hljs-attr">"department_id"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"department_name"</span>: <span class="hljs-string">"string"</span>
+  },
+  <span class="hljs-attr">"position"</span>: {
+    <span class="hljs-attr">"position_id"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"position_name"</span>: <span class="hljs-string">"string"</span>
+  },
+  <span class="hljs-attr">"role"</span>: {
+    <span class="hljs-attr">"role_id"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"role_name"</span>: <span class="hljs-string">"string"</span>
+  },
+  <span class="hljs-attr">"created_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+  <span class="hljs-attr">"updated_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>
+}
+</div></code></pre>
+<p><strong>Error Responses:</strong></p>
+<ul>
+<li><code>400 Bad Request</code>: Validation errors</li>
+<li><code>403 Forbidden</code>: User not authorized</li>
+<li><code>409 Conflict</code>: Email already exists</li>
+</ul>
+<h2 id="review-cycles">Review Cycles</h2>
+<h3 id="get-all-review-cycles">Get All Review Cycles</h3>
+<pre class="hljs"><code><div><span class="hljs-attribute">GET /review-cycles
+</span></div></code></pre>
+<p>Returns a list of all review cycles.</p>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>status</code> (optional): Filter by status (draft, active, completed)</li>
+<li><code>page</code> (optional): Page number for pagination (default: 1)</li>
+<li><code>limit</code> (optional): Number of items per page (default: 10)</li>
+</ul>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"data"</span>: [
+    {
+      <span class="hljs-attr">"cycle_id"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"start_date"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+      <span class="hljs-attr">"end_date"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+      <span class="hljs-attr">"status"</span>: <span class="hljs-string">"draft | active | completed"</span>,
+      <span class="hljs-attr">"assignments_count"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"reviews_count"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"completion_rate"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"created_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+      <span class="hljs-attr">"updated_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>
+    }
+  ],
+  <span class="hljs-attr">"meta"</span>: {
+    <span class="hljs-attr">"total"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"page"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"last_page"</span>: <span class="hljs-string">"number"</span>
+  }
+}
+</div></code></pre>
+<h3 id="create-review-cycle">Create Review Cycle</h3>
+<pre class="hljs"><code><div><span class="hljs-attribute">POST /review-cycles
+</span></div></code></pre>
+<p>Creates a new review cycle. Requires admin role.</p>
+<p><strong>Request Body:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"start_date"</span>: <span class="hljs-string">"string (ISO 8601) (required)"</span>,
+  <span class="hljs-attr">"end_date"</span>: <span class="hljs-string">"string (ISO 8601) (required)"</span>,
+  <span class="hljs-attr">"status"</span>: <span class="hljs-string">"draft | active | completed (default: draft)"</span>,
+  <span class="hljs-attr">"assignments"</span>: [
+    {
+      <span class="hljs-attr">"manager_id"</span>: <span class="hljs-string">"number (required)"</span>,
+      <span class="hljs-attr">"employee_id"</span>: <span class="hljs-string">"number (required)"</span>
+    }
+  ]
+}
+</div></code></pre>
+<p><strong>Validation Rules:</strong></p>
+<ul>
+<li><code>start_date</code>: Must be a future date</li>
+<li><code>end_date</code>: Must be after start_date</li>
+<li><code>assignments</code>:
+<ul>
+<li><code>manager_id</code>: Must exist in employees table</li>
+<li><code>employee_id</code>: Must exist in employees table</li>
+<li>Manager and employee cannot be the same person</li>
+</ul>
+</li>
+</ul>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"cycle_id"</span>: <span class="hljs-string">"number"</span>,
+  <span class="hljs-attr">"start_date"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+  <span class="hljs-attr">"end_date"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+  <span class="hljs-attr">"status"</span>: <span class="hljs-string">"draft"</span>,
+  <span class="hljs-attr">"assignments"</span>: [
+    {
+      <span class="hljs-attr">"assignment_id"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"manager"</span>: {
+        <span class="hljs-attr">"employee_id"</span>: <span class="hljs-string">"number"</span>,
+        <span class="hljs-attr">"first_name"</span>: <span class="hljs-string">"string"</span>,
+        <span class="hljs-attr">"last_name"</span>: <span class="hljs-string">"string"</span>
+      },
+      <span class="hljs-attr">"employee"</span>: {
+        <span class="hljs-attr">"employee_id"</span>: <span class="hljs-string">"number"</span>,
+        <span class="hljs-attr">"first_name"</span>: <span class="hljs-string">"string"</span>,
+        <span class="hljs-attr">"last_name"</span>: <span class="hljs-string">"string"</span>
+      }
+    }
+  ],
+  <span class="hljs-attr">"created_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+  <span class="hljs-attr">"updated_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>
+}
+</div></code></pre>
+<p><strong>Error Responses:</strong></p>
+<ul>
+<li><code>400 Bad Request</code>: Validation errors</li>
+<li><code>403 Forbidden</code>: User not authorized</li>
+<li><code>409 Conflict</code>: Overlapping review cycle dates</li>
+</ul>
+<h2 id="reviews">Reviews</h2>
+<h3 id="get-all-reviews">Get All Reviews</h3>
+<pre class="hljs"><code><div><span class="hljs-attribute">GET /reviews
+</span></div></code></pre>
+<p>Returns a list of reviews based on user's role and permissions.</p>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>cycle_id</code> (optional): Filter by review cycle</li>
+<li><code>reviewer_id</code> (optional): Filter by reviewer</li>
+<li><code>reviewee_id</code> (optional): Filter by reviewee</li>
+<li><code>status</code> (optional): Filter by status (pending, submitted)</li>
+<li><code>page</code> (optional): Page number for pagination (default: 1)</li>
+<li><code>limit</code> (optional): Number of items per page (default: 10)</li>
+</ul>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"data"</span>: [
+    {
+      <span class="hljs-attr">"review_id"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"reviewer"</span>: {
+        <span class="hljs-attr">"employee_id"</span>: <span class="hljs-string">"number"</span>,
+        <span class="hljs-attr">"first_name"</span>: <span class="hljs-string">"string"</span>,
+        <span class="hljs-attr">"last_name"</span>: <span class="hljs-string">"string"</span>,
+        <span class="hljs-attr">"position"</span>: {
+          <span class="hljs-attr">"position_name"</span>: <span class="hljs-string">"string"</span>
+        }
+      },
+      <span class="hljs-attr">"reviewee"</span>: {
+        <span class="hljs-attr">"employee_id"</span>: <span class="hljs-string">"number"</span>,
+        <span class="hljs-attr">"first_name"</span>: <span class="hljs-string">"string"</span>,
+        <span class="hljs-attr">"last_name"</span>: <span class="hljs-string">"string"</span>,
+        <span class="hljs-attr">"position"</span>: {
+          <span class="hljs-attr">"position_name"</span>: <span class="hljs-string">"string"</span>
+        }
+      },
+      <span class="hljs-attr">"review_cycle"</span>: {
+        <span class="hljs-attr">"cycle_id"</span>: <span class="hljs-string">"number"</span>,
+        <span class="hljs-attr">"start_date"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+        <span class="hljs-attr">"end_date"</span>: <span class="hljs-string">"string (ISO 8601)"</span>
+      },
+      <span class="hljs-attr">"status"</span>: <span class="hljs-string">"pending | submitted"</span>,
+      <span class="hljs-attr">"ratings"</span>: [
+        {
+          <span class="hljs-attr">"question_id"</span>: <span class="hljs-string">"number"</span>,
+          <span class="hljs-attr">"question_text"</span>: <span class="hljs-string">"string"</span>,
+          <span class="hljs-attr">"rating"</span>: <span class="hljs-string">"number"</span>,
+          <span class="hljs-attr">"comment"</span>: <span class="hljs-string">"string"</span>
+        }
+      ],
+      <span class="hljs-attr">"overall_comment"</span>: <span class="hljs-string">"string"</span>,
+      <span class="hljs-attr">"submitted_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+      <span class="hljs-attr">"created_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+      <span class="hljs-attr">"updated_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>
+    }
+  ],
+  <span class="hljs-attr">"meta"</span>: {
+    <span class="hljs-attr">"total"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"page"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"last_page"</span>: <span class="hljs-string">"number"</span>
+  }
+}
+</div></code></pre>
+<h3 id="submit-review">Submit Review</h3>
+<pre class="hljs"><code><div><span class="hljs-attribute">POST /reviews/:id/submit
+</span></div></code></pre>
+<p>Submits a completed review.</p>
+<p><strong>Request Body:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"ratings"</span>: [
+    {
+      <span class="hljs-attr">"question_id"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"rating"</span>: <span class="hljs-string">"number (1-5)"</span>,
+      <span class="hljs-attr">"comment"</span>: <span class="hljs-string">"string"</span>
+    }
+  ],
+  <span class="hljs-attr">"overall_comment"</span>: <span class="hljs-string">"string"</span>
+}
+</div></code></pre>
+<p><strong>Validation Rules:</strong></p>
+<ul>
+<li>All questions must be answered</li>
+<li>Ratings must be between 1 and 5</li>
+<li>Overall comment is required</li>
+<li>Review must be within the review cycle's start and end dates</li>
+</ul>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"review_id"</span>: <span class="hljs-string">"number"</span>,
+  <span class="hljs-attr">"status"</span>: <span class="hljs-string">"submitted"</span>,
+  <span class="hljs-attr">"ratings"</span>: [
+    {
+      <span class="hljs-attr">"question_id"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"rating"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"comment"</span>: <span class="hljs-string">"string"</span>
+    }
+  ],
+  <span class="hljs-attr">"overall_comment"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"submitted_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+  <span class="hljs-attr">"updated_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>
+}
+</div></code></pre>
+<p><strong>Error Responses:</strong></p>
+<ul>
+<li><code>400 Bad Request</code>: Validation errors</li>
+<li><code>403 Forbidden</code>: User not authorized</li>
+<li><code>404 Not Found</code>: Review not found</li>
+<li><code>409 Conflict</code>: Review already submitted</li>
+</ul>
+<h2 id="departments">Departments</h2>
+<h3 id="get-all-departments">Get All Departments</h3>
+<pre class="hljs"><code><div><span class="hljs-attribute">GET /departments
+</span></div></code></pre>
+<p>Returns a list of all departments.</p>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"data"</span>: [
+    {
+      <span class="hljs-attr">"department_id"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"department_name"</span>: <span class="hljs-string">"string"</span>,
+      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"string"</span>,
+      <span class="hljs-attr">"employee_count"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"created_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+      <span class="hljs-attr">"updated_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>
+    }
+  ],
+  <span class="hljs-attr">"meta"</span>: {
+    <span class="hljs-attr">"total"</span>: <span class="hljs-string">"number"</span>
+  }
+}
+</div></code></pre>
+<h3 id="create-department">Create Department</h3>
+<pre class="hljs"><code><div><span class="hljs-attribute">POST /departments
+</span></div></code></pre>
+<p>Creates a new department. Requires admin role.</p>
+<p><strong>Request Body:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"department_name"</span>: <span class="hljs-string">"string (required, unique)"</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"string"</span>
+}
+</div></code></pre>
+<p><strong>Validation Rules:</strong></p>
+<ul>
+<li><code>department_name</code>: Must be unique</li>
+</ul>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"department_id"</span>: <span class="hljs-string">"number"</span>,
+  <span class="hljs-attr">"department_name"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"created_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+  <span class="hljs-attr">"updated_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>
+}
+</div></code></pre>
+<h2 id="positions">Positions</h2>
+<h3 id="get-all-positions">Get All Positions</h3>
+<pre class="hljs"><code><div><span class="hljs-attribute">GET /positions
+</span></div></code></pre>
+<p>Returns a list of all positions.</p>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>department_id</code> (optional): Filter by department</li>
+</ul>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"data"</span>: [
+    {
+      <span class="hljs-attr">"position_id"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"position_name"</span>: <span class="hljs-string">"string"</span>,
+      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"string"</span>,
+      <span class="hljs-attr">"department"</span>: {
+        <span class="hljs-attr">"department_id"</span>: <span class="hljs-string">"number"</span>,
+        <span class="hljs-attr">"department_name"</span>: <span class="hljs-string">"string"</span>
+      },
+      <span class="hljs-attr">"employee_count"</span>: <span class="hljs-string">"number"</span>,
+      <span class="hljs-attr">"created_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+      <span class="hljs-attr">"updated_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>
+    }
+  ],
+  <span class="hljs-attr">"meta"</span>: {
+    <span class="hljs-attr">"total"</span>: <span class="hljs-string">"number"</span>
+  }
+}
+</div></code></pre>
+<h3 id="create-position">Create Position</h3>
+<pre class="hljs"><code><div><span class="hljs-attribute">POST /positions
+</span></div></code></pre>
+<p>Creates a new position. Requires admin role.</p>
+<p><strong>Request Body:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"position_name"</span>: <span class="hljs-string">"string (required, unique)"</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"department_id"</span>: <span class="hljs-string">"number (required)"</span>
+}
+</div></code></pre>
+<p><strong>Validation Rules:</strong></p>
+<ul>
+<li><code>position_name</code>: Must be unique within department</li>
+<li><code>department_id</code>: Must exist in departments table</li>
+</ul>
+<p><strong>Response:</strong></p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"position_id"</span>: <span class="hljs-string">"number"</span>,
+  <span class="hljs-attr">"position_name"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"string"</span>,
+  <span class="hljs-attr">"department"</span>: {
+    <span class="hljs-attr">"department_id"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"department_name"</span>: <span class="hljs-string">"string"</span>
+  },
+  <span class="hljs-attr">"created_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>,
+  <span class="hljs-attr">"updated_at"</span>: <span class="hljs-string">"string (ISO 8601)"</span>
+}
+</div></code></pre>
+<h2 id="authentication">Authentication</h2>
+<p>All endpoints except <code>/auth/login</code> require a valid JWT token in the Authorization header:</p>
+<pre class="hljs"><code><div><span class="hljs-attribute">Authorization</span>: Bearer &lt;token&gt;
+</div></code></pre>
+<h3 id="token-expiration">Token Expiration</h3>
+<ul>
+<li>Access tokens expire after 24 hours</li>
+<li>When a token expires, the client must obtain a new token by logging in again</li>
+</ul>
+<h2 id="rate-limiting">Rate Limiting</h2>
+<p>The API implements rate limiting to prevent abuse. Limits are:</p>
+<ul>
+<li>100 requests per minute per IP address</li>
+<li>1000 requests per hour per IP address</li>
+</ul>
+<h2 id="pagination">Pagination</h2>
+<p>All list endpoints support pagination with the following query parameters:</p>
+<ul>
+<li><code>page</code>: Page number (default: 1)</li>
+<li><code>limit</code>: Items per page (default: 10, max: 100)</li>
+</ul>
+<p>Response includes metadata:</p>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"data"</span>: [...],
+  <span class="hljs-attr">"meta"</span>: {
+    <span class="hljs-attr">"total"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"page"</span>: <span class="hljs-string">"number"</span>,
+    <span class="hljs-attr">"last_page"</span>: <span class="hljs-string">"number"</span>
+  }
+}
+</div></code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="common-error-responses">Common Error Responses</h3>
+<h4 id="400-bad-request">400 Bad Request</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"statusCode"</span>: <span class="hljs-number">400</span>,
+  <span class="hljs-attr">"message"</span>: [<span class="hljs-string">"validation error messages"</span>],
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Bad Request"</span>
+}
+</div></code></pre>
+<h4 id="401-unauthorized">401 Unauthorized</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"statusCode"</span>: <span class="hljs-number">401</span>,
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Unauthorized"</span>,
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Unauthorized"</span>
+}
+</div></code></pre>
+<h4 id="403-forbidden">403 Forbidden</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"statusCode"</span>: <span class="hljs-number">403</span>,
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Forbidden"</span>,
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Forbidden"</span>
+}
+</div></code></pre>
+<h4 id="404-not-found">404 Not Found</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"statusCode"</span>: <span class="hljs-number">404</span>,
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Resource not found"</span>,
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Not Found"</span>
+}
+</div></code></pre>
+<h4 id="409-conflict">409 Conflict</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"statusCode"</span>: <span class="hljs-number">409</span>,
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Resource already exists"</span>,
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Conflict"</span>
+}
+</div></code></pre>
+<h4 id="422-unprocessable-entity">422 Unprocessable Entity</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"statusCode"</span>: <span class="hljs-number">422</span>,
+  <span class="hljs-attr">"message"</span>: [<span class="hljs-string">"validation error messages"</span>],
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Unprocessable Entity"</span>
+}
+</div></code></pre>
+<h4 id="429-too-many-requests">429 Too Many Requests</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"statusCode"</span>: <span class="hljs-number">429</span>,
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Too many requests"</span>,
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Too Many Requests"</span>,
+  <span class="hljs-attr">"retryAfter"</span>: <span class="hljs-string">"number (seconds)"</span>
+}
+</div></code></pre>
+<h4 id="500-internal-server-error">500 Internal Server Error</h4>
+<pre class="hljs"><code><div>{
+  <span class="hljs-attr">"statusCode"</span>: <span class="hljs-number">500</span>,
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Internal server error"</span>,
+  <span class="hljs-attr">"error"</span>: <span class="hljs-string">"Internal Server Error"</span>
+}
+</div></code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p><strong>Authentication</strong></p>
+<ul>
+<li>Always use HTTPS in production</li>
+<li>Store tokens securely</li>
+<li>Never send tokens in URL parameters</li>
+</ul>
+</li>
+<li>
+<p><strong>Rate Limiting</strong></p>
+<ul>
+<li>Implement exponential backoff when rate limited</li>
+<li>Cache responses when appropriate</li>
+</ul>
+</li>
+<li>
+<p><strong>Error Handling</strong></p>
+<ul>
+<li>Always check for error responses</li>
+<li>Handle network errors gracefully</li>
+<li>Implement retry logic for transient failures</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Validation</strong></p>
+<ul>
+<li>Validate all input on both client and server</li>
+<li>Sanitize user input</li>
+<li>Use appropriate data types</li>
+</ul>
+</li>
+</ol>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>All timestamps are in ISO 8601 format</li>
+<li>All IDs are integers</li>
+<li>All endpoints return JSON responses</li>
+<li>All POST/PATCH requests expect JSON request bodies</li>
+<li>All endpoints are protected by JWT authentication except for the login endpoint</li>
+<li>Database constraints ensure referential integrity</li>
+<li>Soft deletes are implemented for all entities</li>
+<li>Audit logs track all changes to entities</li>
+</ul>
+
+</body>
+</html>
