@@ -1,0 +1,316 @@
+.pending-nominations {
+  @apply bg-white rounded-lg shadow-sm flex flex-col h-[calc(100vh-12rem)] w-full;
+}
+
+.card-header {
+  @apply flex flex-col gap-4 p-4 sm:p-5 md:p-6 pb-0;
+}
+
+.header-content {
+  @apply flex items-center gap-2 justify-between;
+}
+
+.card-title {
+  @apply text-lg font-medium text-gray-900;
+}
+
+.tabs-container {
+  @apply w-full border-b border-gray-200 overflow-x-auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabs-container::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs {
+  @apply flex min-w-fit pb-px px-4;
+  @apply mx-auto;
+}
+
+@media (max-width: 640px) {
+  .tabs {
+    @apply w-full justify-start gap-4;
+  }
+
+  .tab {
+    @apply flex-shrink-0 whitespace-nowrap;
+    @apply px-4 py-2;
+  }
+}
+
+.tab {
+  @apply px-6 py-2 text-sm font-medium text-gray-600;
+  @apply hover:text-gray-900 relative -mb-px;
+  @apply flex items-center gap-2;
+  @apply transition-colors duration-200;
+}
+
+.tab.active {
+  @apply text-indigo-600 border-b-2 border-indigo-600;
+}
+
+.tab-badge {
+  @apply bg-indigo-100 text-indigo-600 text-xs font-medium;
+  @apply px-2 py-0.5 rounded-full min-w-[1.25rem] text-center;
+}
+
+.nominations-list {
+  @apply space-y-3 sm:space-y-4 p-4 sm:p-5 md:p-6 pt-4 overflow-y-auto;
+}
+
+.nomination-item {
+  @apply flex flex-col sm:flex-row sm:items-center gap-4 justify-between p-3 sm:p-4 md:p-5 rounded-lg border border-gray-100 hover:border-indigo-100 hover:bg-indigo-50/30 transition-colors;
+}
+
+.nomination-info {
+  @apply flex items-start gap-3 sm:gap-4 w-full sm:w-auto;
+}
+
+.nomination-avatar {
+  @apply w-10 h-10 rounded-full flex-shrink-0;
+}
+
+.nomination-details {
+  @apply space-y-1 min-w-0 flex-1;
+}
+
+.nomination-name {
+  @apply text-sm font-medium text-gray-900;
+}
+
+.nomination-meta {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.nomination-role {
+  @apply px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded-full text-xs font-medium truncate max-w-[200px];
+}
+
+.nomination-department {
+  @apply text-gray-500 text-xs truncate;
+}
+
+.nomination-due-info {
+  @apply flex flex-wrap items-center gap-2 text-xs text-gray-500 mt-1;
+}
+
+.days-remaining {
+  @apply text-xs font-medium;
+}
+
+.days-remaining.urgent {
+  @apply text-red-600;
+}
+
+.nomination-actions {
+  @apply flex items-center gap-2 w-full sm:w-auto justify-end mt-3 sm:mt-0;
+}
+
+.accept-button,
+.reject-button {
+  @apply flex-1 sm:flex-initial justify-center text-sm py-2 px-4;
+}
+
+.accept-button {
+  @apply bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500;
+}
+
+.reject-button {
+  @apply bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500;
+}
+
+/* Send Requests tab styles */
+.send-requests {
+  @apply flex flex-col h-full overflow-hidden;
+}
+
+.search-bar {
+  @apply sticky top-0 z-10 bg-white px-6 py-4;
+  @apply border-b border-gray-100 shadow-sm;
+  @apply flex items-center justify-center;
+}
+
+.search-input {
+  @apply w-full max-w-2xl pl-10 pr-4 py-2.5;
+  @apply text-sm text-gray-900 bg-gray-50;
+  @apply border border-gray-200 rounded-lg;
+  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent;
+  @apply placeholder-gray-400 transition-all duration-200;
+  @apply hover:bg-gray-100/50;
+}
+
+.search-icon {
+  @apply absolute left-[26px] top-1/2 -translate-y-1/2;
+  @apply text-gray-400 h-5 w-5;
+  @apply pointer-events-none;
+}
+
+.peers-list {
+  @apply flex-1 overflow-y-auto px-4 py-3;
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4;
+  @apply content-start;
+  align-items: start;
+}
+
+.peer-item {
+  @apply flex flex-col items-center gap-3 p-4 rounded-lg border border-gray-100;
+  @apply hover:border-indigo-100 hover:bg-indigo-50/30 transition-all cursor-pointer;
+  @apply w-full;
+  @apply h-fit;
+  @apply relative;
+}
+
+.peer-item.selected {
+  @apply bg-indigo-50 border-indigo-200;
+  @apply ring-2 ring-indigo-500 ring-opacity-50;
+}
+
+.peer-item.not-selectable {
+  @apply opacity-50 cursor-not-allowed;
+  @apply hover:border-gray-100 hover:bg-transparent;
+}
+
+.peer-info {
+  @apply flex-1 min-w-0 flex flex-col items-center text-center;
+  @apply w-full;
+}
+
+.peer-avatar {
+  @apply w-12 h-12 rounded-full flex-shrink-0;
+  @apply mb-2;
+}
+
+.peer-name {
+  @apply text-sm font-medium text-gray-900 truncate;
+  @apply w-full text-center;
+}
+
+.peer-meta {
+  @apply flex flex-col text-xs space-y-1 items-center;
+  @apply w-full;
+}
+
+.peer-role {
+  @apply text-gray-600 truncate text-center;
+}
+
+.peer-department {
+  @apply text-gray-500 truncate text-center;
+}
+
+.selection-indicator {
+  @apply absolute right-3 top-3;
+  @apply w-6 h-6 flex items-center justify-center;
+  @apply rounded-full bg-indigo-500 text-white;
+  @apply transform scale-0 transition-transform duration-200;
+}
+
+.peer-item.selected .selection-indicator {
+  @apply scale-100;
+}
+
+.selection-counter {
+  @apply absolute top-3 left-3;
+  @apply text-xs font-medium text-indigo-600;
+  @apply bg-indigo-100 rounded-full;
+  @apply px-2 py-0.5;
+}
+
+.send-actions {
+  @apply sticky bottom-0 bg-white border-t border-gray-100;
+  @apply p-4 flex justify-end;
+}
+
+.send-button {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg;
+  @apply bg-indigo-600 text-white text-sm font-medium;
+  @apply hover:bg-indigo-700 transition-colors;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.nominations-empty {
+  @apply flex flex-col items-center justify-center h-full p-6 text-center;
+}
+
+.nominations-empty-icon {
+  @apply w-12 h-12 text-gray-400 mb-4;
+}
+
+.nominations-empty-title {
+  @apply text-lg font-medium text-gray-900 mb-1;
+}
+
+.nominations-empty-text {
+  @apply text-gray-500 text-sm;
+}
+
+/* Mobile-specific touch improvements */
+@media (max-width: 640px) {
+  .nomination-item,
+  .peer-item {
+    @apply active:bg-gray-50;
+    touch-action: manipulation;
+  }
+
+  .peers-list {
+    @apply -mx-4 px-4;
+  }
+
+  .nominations-list {
+    @apply -mx-4 px-4;
+  }
+}
+
+/* iPad/Tablet-specific improvements */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .pending-nominations {
+    @apply h-[calc(100vh-14rem)];
+  }
+
+  .nomination-item {
+    @apply p-4 gap-5;
+  }
+
+  .nomination-info {
+    @apply gap-5;
+  }
+
+  .nomination-actions {
+    @apply gap-3;
+  }
+
+  .peers-list {
+    @apply grid grid-cols-2 gap-4;
+    max-height: calc(100% - 9rem);
+  }
+
+  .peer-item {
+    @apply p-4 gap-4;
+    height: fit-content;
+  }
+
+  /* Improved touch targets for iPad */
+  .nomination-item,
+  .peer-item,
+  .tab,
+  .search-input,
+  .accept-button,
+  .reject-button,
+  .send-button {
+    @apply cursor-pointer touch-manipulation;
+  }
+
+  /* Better spacing for iPad landscape */
+  @media (orientation: landscape) {
+    .peers-list {
+      @apply grid-cols-3;
+    }
+
+    .nomination-item {
+      @apply flex-row items-center;
+    }
+  }
+}

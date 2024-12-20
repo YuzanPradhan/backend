@@ -1,0 +1,87 @@
+.login-container {
+  @apply min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8;
+}
+
+.login-header {
+  @apply sm:mx-auto sm:w-full sm:max-w-md;
+}
+
+.login-title {
+  @apply text-center text-3xl font-extrabold text-gray-900;
+}
+
+.login-form-container {
+  @apply mt-8 sm:mx-auto sm:w-full sm:max-w-md;
+}
+
+.login-form-wrapper {
+  @apply bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10;
+}
+
+.login-form {
+  @apply space-y-6;
+}
+
+.login-error {
+  @apply rounded-md bg-red-50 p-4;
+}
+
+.login-error-content {
+  @apply flex;
+}
+
+.login-error-icon {
+  @apply flex-shrink-0;
+}
+
+.login-error-icon-svg {
+  @apply h-5 w-5 text-red-400;
+}
+
+.login-error-message {
+  @apply ml-3;
+}
+
+.login-error-text {
+  @apply text-sm font-medium text-red-800;
+}
+
+.login-label {
+  @apply block text-sm font-medium text-gray-700;
+}
+
+.login-input-wrapper {
+  @apply mt-1;
+}
+
+.login-input {
+  @apply input;
+}
+
+.login-options {
+  @apply flex items-center justify-between;
+}
+
+.login-remember {
+  @apply flex items-center;
+}
+
+.login-remember-checkbox {
+  @apply h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded;
+}
+
+.login-remember-label {
+  @apply ml-2 block text-sm text-gray-900;
+}
+
+.login-forgot-password {
+  @apply text-sm;
+}
+
+.login-forgot-password-link {
+  @apply font-medium text-primary-600 hover:text-primary-500;
+}
+
+.login-submit {
+  @apply w-full;
+}

@@ -1,0 +1,134 @@
+.dashboard-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.dashboard-header {
+  @apply mb-8;
+}
+
+.dashboard-title {
+  @apply text-2xl font-bold text-gray-900 mb-2;
+}
+
+.dashboard-subtitle {
+  @apply text-sm text-gray-500;
+}
+
+/* Stats Grid Layout */
+.stats-grid {
+  @apply grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8;
+}
+
+/* Dashboard Content Layout */
+.dashboard-content {
+  @apply max-w-full;
+}
+
+.dashboard-grid {
+  @apply grid grid-cols-1 gap-5 sm:grid-cols-2;
+  @apply lg:grid-cols-2 lg:gap-5;
+}
+
+/* Common Card Styles */
+.dashboard-card {
+  @apply bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden;
+  @apply hover:border-gray-300 transition-all duration-200;
+  min-height: 24rem;
+}
+
+/* Stats Card Styles */
+.stats-card {
+  @apply px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6;
+  @apply border border-gray-100 hover:border-gray-200 transition-all duration-200;
+}
+
+.stats-header {
+  @apply flex items-center justify-between;
+}
+
+.stats-title {
+  @apply text-sm font-medium text-gray-500 truncate;
+}
+
+.stats-icon {
+  @apply flex-shrink-0 rounded-md bg-blue-50 p-3;
+}
+
+.stats-value {
+  @apply mt-3 text-3xl font-semibold text-gray-900;
+}
+
+.stats-change {
+  @apply inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0;
+}
+
+.status-badge {
+  @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+}
+
+.trend-icon {
+  @apply flex-shrink-0 self-center;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 640px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  .dashboard-card, .stats-card {
+    width: 100%;
+  }
+}
+
+/* Card Content Styles */
+.card-header {
+  @apply px-6 py-4 border-b border-gray-200;
+}
+
+.card-title {
+  @apply text-lg font-medium text-gray-900;
+}
+
+.card-content {
+  @apply p-6;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

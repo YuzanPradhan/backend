@@ -1,0 +1,119 @@
+/* Responsive table styles */
+.table-container {
+  @apply w-full overflow-x-auto -mx-4 sm:mx-0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-wrapper {
+  @apply min-w-full inline-block align-middle px-4 sm:px-0;
+}
+
+.table {
+  @apply min-w-full divide-y divide-gray-200;
+}
+
+.table-header {
+  @apply bg-gray-50;
+}
+
+.table-header-cell {
+  @apply px-3 py-3.5 text-left text-sm font-semibold text-gray-900 whitespace-nowrap;
+  @apply sm:first:pl-6 sm:last:pr-6;
+}
+
+.table-body {
+  @apply divide-y divide-gray-200 bg-white;
+}
+
+.table-row {
+  @apply hover:bg-gray-50 transition-colors;
+}
+
+.table-cell {
+  @apply px-3 py-4 text-sm text-gray-500 whitespace-nowrap;
+  @apply sm:first:pl-6 sm:last:pr-6;
+}
+
+/* Custom scrollbar for better UX */
+.table-container::-webkit-scrollbar {
+  @apply h-1.5;
+}
+
+.table-container::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded-full;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Fade effect indicators */
+.table-container {
+  position: relative;
+}
+
+.table-container::before,
+.table-container::after {
+  content: '';
+  @apply absolute top-0 bottom-0 w-8 z-10 pointer-events-none;
+  @apply hidden sm:block;
+}
+
+.table-container::before {
+  @apply left-0 bg-gradient-to-r from-white to-transparent;
+}
+
+.table-container::after {
+  @apply right-0 bg-gradient-to-l from-white to-transparent;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .table-container {
+    @apply -mx-4;
+  }
+
+  .table-wrapper {
+    @apply px-4;
+  }
+
+  .table-cell,
+  .table-header-cell {
+    @apply first:pl-4 last:pr-4;
+  }
+
+  /* Add horizontal padding for better touch scrolling */
+  .table {
+    @apply pb-1;
+  }
+}
+
+/* Status badges */
+.status-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize;
+}
+
+.status-badge-active {
+  @apply bg-green-100 text-green-800;
+}
+
+.status-badge-inactive {
+  @apply bg-gray-100 text-gray-800;
+}
+
+/* Sort indicators */
+.sort-indicator {
+  @apply inline-flex flex-col ml-1 -space-y-1;
+}
+
+.sort-arrow {
+  @apply h-2 w-2 text-gray-400;
+}
+
+.sort-arrow.active {
+  @apply text-gray-900;
+}

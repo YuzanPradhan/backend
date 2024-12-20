@@ -1,0 +1,216 @@
+.review-cycle-progress {
+  @apply h-full flex flex-col bg-white rounded-lg;
+}
+
+.card-header {
+  @apply px-6 py-4 border-b border-gray-200 flex justify-between items-center;
+}
+
+.header-content {
+  @apply flex items-center space-x-3;
+}
+
+.card-title {
+  @apply text-lg font-semibold text-gray-900;
+}
+
+.cycle-info {
+  @apply px-3 py-1 bg-indigo-50 text-indigo-700 text-sm font-medium rounded-full;
+}
+
+.stages-timeline {
+  @apply space-y-8 relative mt-6 flex-1 overflow-y-auto p-6;
+  max-height: calc(100vh - 300px);
+}
+
+/* Timeline connector line with animated gradient and dashed pattern */
+.stages-timeline::before {
+  content: '';
+  @apply absolute top-0 bottom-0 w-0.5 bg-gradient-to-b from-indigo-600 via-indigo-400 to-gray-200;
+  left: 44px;
+  background-size: 200% 200%;
+  animation: gradientFlow 3s ease infinite;
+  mask-image: linear-gradient(black 33%, rgba(0, 0, 0, 0.5) 33%);
+  mask-size: 1px 6px;
+  mask-repeat: repeat-y;
+}
+
+/* Timeline connector animation */
+@keyframes gradientFlow {
+  0% { background-position: 50% 0%; }
+  50% { background-position: 50% 100%; }
+  100% { background-position: 50% 0%; }
+}
+
+.stage-item {
+  @apply flex items-start relative pl-20;
+}
+
+.stage-icon {
+  @apply absolute -translate-x-1/2 z-10;
+  left: 44px;
+}
+
+/* Enhanced icon styles with shadow and glow effects */
+.stage-icon-inner {
+  @apply flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-300 shadow-sm;
+  background-color: white;
+}
+
+.stage-icon-inner.completed {
+  @apply bg-green-50 border-green-500 text-green-600 shadow-md;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+}
+
+.stage-icon-inner.current {
+  @apply bg-blue-50 border-blue-500 text-blue-600;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.stage-icon-inner.upcoming {
+  @apply bg-gray-50 border-gray-300 text-gray-400;
+  box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.1);
+}
+
+/* Pulse glow animation for current stage */
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+.stage-content {
+  @apply flex-1 ml-4;
+}
+
+.stage-header {
+  @apply flex justify-between items-center mb-1;
+}
+
+.stage-name {
+  @apply font-semibold text-base;
+}
+
+.stage-date {
+  @apply text-sm text-gray-500 bg-gray-50 px-2 py-0.5 rounded-full;
+}
+
+.stage-description {
+  @apply text-sm text-gray-600 mb-3;
+}
+
+.completion-bar {
+  @apply mt-3;
+}
+
+.completion-progress {
+  @apply h-2 rounded-full transition-all duration-500 ease-in-out;
+}
+
+.completion-details {
+  @apply flex justify-between items-center mt-2;
+}
+
+.completion-text {
+  @apply text-xs text-gray-600;
+}
+
+.stage-status {
+  @apply text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700;
+}
+
+/* Stage status styles */
+.stage-item.completed .stage-name {
+  @apply text-green-700;
+}
+
+.stage-item.completed .stage-content {
+  @apply bg-green-50/30 border border-green-100 rounded-lg p-4;
+}
+
+.stage-item.completed .completion-progress {
+  @apply bg-green-500;
+}
+
+.stage-item.current .stage-name {
+  @apply text-blue-700;
+}
+
+.stage-item.current .stage-content {
+  @apply bg-blue-50/30 border border-blue-100 rounded-lg p-4 ring-1 ring-blue-100;
+}
+
+.stage-item.current .completion-progress {
+  @apply bg-blue-500;
+}
+
+.stage-item.upcoming .stage-name {
+  @apply text-gray-500;
+}
+
+.stage-item.upcoming .stage-content {
+  @apply bg-gray-50/30 border border-gray-100 rounded-lg p-4;
+}
+
+/* Hover effects */
+.stage-content {
+  @apply transition-all duration-200;
+}
+
+.stage-item:hover .stage-content {
+  @apply transform -translate-y-0.5;
+}
+
+.stage-item.completed:hover .stage-icon-inner {
+  @apply transform scale-105;
+  box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.15);
+}
+
+.stage-item.current:hover .stage-icon-inner {
+  @apply transform scale-105;
+  box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.2);
+}
+
+.stage-item.upcoming:hover .stage-content {
+  @apply bg-gray-50/50;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .card-header {
+    @apply px-4 py-3;
+  }
+
+  .stages-timeline {
+    @apply p-4 space-y-6;
+  }
+
+  .stage-item {
+    @apply pl-16;
+  }
+
+  .stage-icon {
+    @apply left-6;
+  }
+
+  .stage-icon-inner {
+    @apply w-8 h-8;
+  }
+
+  .stage-content {
+    @apply ml-3;
+  }
+
+  .stage-header {
+    @apply flex-col items-start space-y-1;
+  }
+
+  .stage-name {
+    @apply text-sm;
+  }
+
+  .stage-description {
+    @apply text-xs;
+  }
+}

@@ -1,0 +1,43 @@
+.review-detail-header {
+  margin-bottom: 2rem;
+}
+
+.review-detail-content {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.employee-info {
+  margin-bottom: 2rem;
+}
+
+.employee-info h1 {
+  color: #1a202c;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.employee-info p {
+  color: #4a5568;
+  margin: 0;
+}
+
+.employee-info .email {
+  color: #718096;
+  font-size: 0.875rem;
+}
+
+.review-questions {
+  margin-bottom: 2rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
